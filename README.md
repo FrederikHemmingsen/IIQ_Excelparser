@@ -40,7 +40,7 @@ def extract_exif_data_list(filepath):
 Before you begin, ensure you have the following installed on your system:
 
 - Python (version more than than 3.12.2)
-- exiftool (Make sure to add it to your system's PATH)
+- [exiftool](https://exiftool.org/) (Make sure to add it to your system's PATH)
 - GIT
 
 ## Installation
