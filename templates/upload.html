@@ -79,36 +79,42 @@
 </head>
 <body>
     <div class="container">
-        <h1>Upload a file</h1>
+        <h1>Hungry for IIQ/JPG!</h1>
         <form id="uploadForm" enctype="multipart/form-data">
             <input type="file" id="file" name="file">
-            <button type="button" onclick="uploadFile()" class="btn">Upload</button>
+            <button type="button" onclick="uploadFile()" class="btn">Eat</button>
+          <div>
+              <input type="radio" id="version1" name="displayVersion" value="version1" checked>
+              <label for="version1">Give me everything!</label>
+          </div>
+          <div>
+              <input type="radio" id="version2" name="displayVersion" value="version2">
+              <label for="version2">No bullshit filter</label>
+          </div>
         </form>
         <div id="uploadProgress"></div>
         <div id="exifDataDisplay"></div>
     </div>
 
     <script>
-        function uploadFile() {
-            var formData = new FormData();
-            var fileInput = document.getElementById('file');
-            var progressDiv = document.getElementById('uploadProgress');
-            formData.append('file', fileInput.files[0]);
+      function uploadFile() {
+      var formData = new FormData(document.getElementById('uploadForm'));  // This already includes the file input.
+      var version = document.querySelector('input[name="displayVersion"]:checked').value;
+      formData.append('version', version);  // Append version choice to FormData.
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/', true);
-
-            xhr.upload.onprogress = function(event) {
-                if (event.lengthComputable) {
-                    var percentComplete = (event.loaded / event.total) * 100;
-                    progressDiv.innerHTML = 'Upload progress: ' + percentComplete.toFixed(2) + '%';
-                }
-            };
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/', true);
+      xhr.upload.onprogress = function(event) {
+          if (event.lengthComputable) {
+              var percentComplete = (event.loaded / event.total) * 100;
+              document.getElementById('uploadProgress').innerHTML = 'Upload progress: ' + percentComplete.toFixed(2) + '%';
+          }
+      };
 
             xhr.onload = function() {
                 if (xhr.status == 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    console.log(response); // Log the response
+                    var response = JSON.parse(xhr.responseText);                
+                    console.log(response); // Log the response            
                     displayExifData(response); // Display the EXIF data
                     progressDiv.style.opacity = '0';
                     progressDiv.style.transition = 'opacity 1s ease-in-out';
@@ -124,17 +130,21 @@
             xhr.send(formData);
         }
 
-        function displayExifData(data) {
-            var display = document.getElementById('exifDataDisplay');
-            var dataHtml = "<h3>EXIF Data</h3><div style='max-height: 400px; overflow-y: auto;'>";
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
-                    dataHtml += "<p><strong>" + key + ":</strong> " + data[key] + "</p>";
-                }
-            }
-            dataHtml += "</div>";
-            display.innerHTML = dataHtml;
-        }
+      function displayExifData(data) {
+          var display = document.getElementById('exifDataDisplay');
+          var dataHtml = "<h3>EXIF Data</h3><div style='max-height: 400px; overflow-y: auto;'>";
+
+          for (var key in data) {
+              if (data.hasOwnProperty(key)) {
+                  // Convert the value to a string to ensure it's treated as text
+                  var valueStr = String(data[key]);
+                  dataHtml += "<p><strong>" + key + ":</strong> " + valueStr + "</p>";
+              }
+          }
+
+          dataHtml += "</div>";
+          display.innerHTML = dataHtml;
+      }
     </script>
 </body>
 </html>
