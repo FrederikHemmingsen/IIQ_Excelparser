@@ -4,7 +4,7 @@ This guide provides step-by-step instructions on how to set up and run the IIQ N
 
 
 ## what is this? 
-This is a quick program to extract Exif data from IIQ phaseone format. 
+This is a quick program to extract Exif data from IIQ Phase One format. 
 I found it hard to find the information i neeeded in the exif data as there was so many options.
 
 ![billede](https://github.com/FrederikHemmingsen/IIQ_No_Bullshit_Parser/assets/131653152/28677619-9d98-4ba3-aede-200ea5722c82)
