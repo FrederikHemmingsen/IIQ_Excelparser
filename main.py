@@ -46,25 +46,25 @@ def apply_exposure_conversion(metadata):
 
 def extract_exif_data_list(filepath):
   desired_tags = [
-      'EXIF:Model',
-      'EXIF:ExposureTime',
-      'EXIF:FNumber',
-      'Composite:LensID',
-      'EXIF:FocalLength',
-      'EXIF:ISO',
-      'XMP:GPSFlightAltitude',
-      'XMP:GPSAltitudeAboveTakeOff',
-      'XMP:RangeFinderDistance',
-      'Composite:HyperfocalDistance',
-      'EXIF:CreateDate',
-      'Composite:GPSPosition',
-      'XMP:GPSSpeed',
-      'XMP:GPSSpeedRef',
-      'MakerNotes:FirmwareVersions',
-      'MakerNotes:SerialNumber',
+      'Model',
+      'ExposureTime',
+      'FNumber',
+      'LensID',
+      'FocalLength',
+      'ISO',
+      'GPSFlightAltitude',
+      'GPSAltitudeAboveTakeOff',
+      'RangeFinderDistance',
+      'HyperfocalDistance',
+      'CreateDate',
+      'GPSPosition',
+      'GPSSpeed',
+      'GPSSpeedRef',
+      'FirmwareVersions',
+      'SerialNumber',
   ]
 
-  with exiftool.ExifTool() as et:
+  with exiftool.ExifTool(common_args=None) as et:
     et.set_json_loads(custom_json_loads)
     metadata = et.execute_json(*['-j', filepath] + desired_tags)
 
@@ -80,7 +80,7 @@ def extract_exif_data_list(filepath):
 
 
 def extract_exif_data(filepath):
-  with exiftool.ExifTool() as et:
+  with exiftool.ExifTool(common_args=None) as et:
     et.set_json_loads(custom_json_loads)
     metadata = et.execute_json('-j', filepath)
 
@@ -114,5 +114,5 @@ def index():
 if __name__ == '__main__':
   app.run(debug=True)
 
-#webview.create_window('Hello world', 'https://pywebview.flowrl.com/')
+#webview.create_window('Hello world', 'https://')
 #webview.start()
